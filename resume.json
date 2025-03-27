@@ -19,7 +19,7 @@
     "birth": {
       "place": "#######",
       "state": "France",
-      "date": "######"
+      "date": "1970-12-31"
     },
     "profiles": [
       
@@ -37,7 +37,7 @@
       },
       "area": "3ème",
       "studyType": "Cycle 4, Cycle des approfondissements",
-      "startDate": "###########",      
+      "startDate": "1970-12-31",      
       "score": "",
       "courses": []
     }
