@@ -5,21 +5,21 @@
     "name": "Milo Stolaric",
     "label": "Collégien",
     "image": "",
-    "email": "milo.stolaric@gmail.com",
-    "phone": "+33651748345",
+    "email": "####.###@####.com",
+    "phone": "+33########",
     "url": "https://marmits.github.io/cvmilo/",
-    "summary": "Éleve de 3ème au collège Alexandre Dumas à Neufchâtel-sur-Aisne",
+    "summary": "Éleve de 3ème",
     "location": {
-      "address": "8 rue du château",
-      "postalCode": "02190",
-      "city": "Condé-sur-Suippe",
+      "address": "# ### ## #######",
+      "postalCode": "#####",
+      "city": "#########",
       "countryCode": "FR",
-      "region": "Hauts-de-France"
+      "region": "#######"
     },
     "birth": {
-      "place": "Reims",
+      "place": "#######",
       "state": "France",
-      "date": "2010-12-20"
+      "date": "######"
     },
     "profiles": [
       
@@ -29,15 +29,15 @@
   ],
   "education": [
     {
-      "institution": "Collège Alexandre Dumas",
+      "institution": "##############",
       "location": {
-        "city": "Neufchâtel-sur-Aisne",
+        "city": "#######################",
         "countryCode": "FR",
         "region": "France"
       },
       "area": "3ème",
       "studyType": "Cycle 4, Cycle des approfondissements",
-      "startDate": "2021-09-01",      
+      "startDate": "###########",      
       "score": "",
       "courses": []
     }
