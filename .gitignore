@@ -1,0 +1,8 @@
+node_modules/
+.idea/
+resume.html
+resume.pdf
+package-lock.json
+
+index.html
+cv/index.html

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "id": "milo",
+    "name": "Milo Stolaric",
+    "label": "Collégien",
+    "image": "",
+    "email": "milo.stolaric@gmail.com",
+    "phone": "+33651748345",
+    "url": "https://cvmilo.github.io",
+    "summary": "Éleve de 3ème au collège Alexandre Dumas à Neufchâtel-sur-Aisne",
+    "location": {
+      "address": "8 rue du château",
+      "postalCode": "02190",
+      "city": "Condé-sur-Suippe",
+      "countryCode": "FR",
+      "region": "Hauts-de-France"
+    },
+    "birth": {
+      "place": "Reims",
+      "state": "France",
+      "date": "2010-12-20"
+    },
+    "profiles": [
+      
+    ]
+  },
+  "work": [
+  ],
+  "education": [
+    {
+      "institution": "Collège Alexandre Dumas",
+      "location": {
+        "city": "Neufchâtel-sur-Aisne",
+        "countryCode": "FR",
+        "region": "France"
+      },
+      "area": "3ème",
+      "studyType": "Cycle 4, Cycle des approfondissements",
+      "startDate": "2021-09-01",      
+      "score": "",
+      "courses": []
+    }
+  ],
+  "volunteer": [],
+  "awards": [],
+  "certificates": [],
+  "publications": [],
+  "skills": [
+    {
+      "keywords": [
+        "ASSR1", "ASSR2"
+
+      ],
+      "name": "Sécurité routière."
+    }
+  ],
+  "languages": [
+    {
+      "language": "Fr",
+      "fluency": "Langue maternelle"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Athlétisme"
+    },
+    {
+      "name": "Football"
+    }
+  ],
+  "references": [],
+  "projects": [
+
+  ],
+  "meta": {
+    "version": "v1.0.0",
+    "canonical": "https://github.com/jsonresume/resume-schema/blob/v1.0.0/schema.json"
+  }
+}
