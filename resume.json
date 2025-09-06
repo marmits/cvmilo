@@ -8,7 +8,7 @@
     "email": "####.###@####.com",
     "phone": "+33########",
     "url": "https://marmits.github.io/cvmilo/",
-    "summary": "Éleve de 3ème",
+    "summary": "Élève de 2de",
     "location": {
       "address": "# ### ## #######",
       "postalCode": "#####",
@@ -28,6 +28,19 @@
   "work": [
   ],
   "education": [
+	{
+      "institution": "##############",
+      "location": {
+        "city": "#######################",
+        "countryCode": "FR",
+        "region": "France"
+      },
+      "area": "Lycée",
+      "studyType": "Classe de 2de générale et technologique",
+	  "startDate": "2025-09-01",  
+      "score": "",
+      "courses": []
+    }
     {
       "institution": "##############",
       "location": {
@@ -35,9 +48,10 @@
         "countryCode": "FR",
         "region": "France"
       },
-      "area": "3ème",
-      "studyType": "Cycle 4, Cycle des approfondissements",
-      "startDate": "2021-09-01",      
+      "area": "Collège",
+      "studyType": "6e, 5e, 4e, 3e",
+      "startDate": "2021-09-01",    
+      "endDate" : "2025-07-03",       
       "score": "",
       "courses": []
     }
