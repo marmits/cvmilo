@@ -1,105 +1,115 @@
-# This is a basic workflow to help you get started with Actions
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  #pull_request:
-  #  branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-  
-permissions:                    # Global permissions configuration starts here
-  contents: write                # 'read' access to repository contents
-  pull-requests: write   
-  id-token: write
 
-  
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Permissions minimales par défaut.
+permissions:
+  contents: read
+
 jobs:
-  # This workflow contains a single job called "build"
-  test: 
+  test:
+    name: Test on Node.js 24
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [22]
-    name: Test on Node.js ${{ matrix.node }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
-      - name: authentification
+      # Nécessaire si package-lock.json référence le thème via git+ssh.
+      - name: Configure SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 24
+          cache: npm
 
-      - name: Install
+      # Le thème exécute "pnpm run build" dans son script prepare.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.15.0
+
+      - name: Install dependencies
         run: npm ci
 
+      - name: Check dependency tree
+        run: npm ls
+
+      - name: Security audit
+        run: npm audit
+
       - name: Test
-        run: |
-              if [ -f package.json ] && grep -q '"test":' package.json; then
-                npm test
-              else
-                echo "No tests configured"
-              fi
+        run: npm test
 
   release:
+    name: Build CV and PDF
     needs: test
     runs-on: ubuntu-latest
-    name: Release
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
-          fetch-depth: 0
-     
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          node-version: 22
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
 
-      - name: Synchroniser resume.json
-        run: git checkout origin/main -- resume.json
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.15.0
 
-      - name: Install
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: shown npm
-        run: npm ls        
+      - name: Check dependency tree
+        run: npm ls
 
-      - name: Install resume
+      - name: Security audit
+        run: npm audit
+
+      - name: Render resume
         run: npx resumed render resume.json --theme jsonresume-theme-stackoverflowmar
 
-      - name: create index
+      - name: Create index
         run: mv resume.html index.html
 
-      - name: Convert pdf
-        run: npm run start || echo "No start script found"        
+      - name: Generate PDF
+        run: npm start
 
-      - name: Display event name 
-        run: echo "github.event_name=${{ github.event_name }}"
-    
-      - name: Upload artifact
-        if: github.ref == 'refs/heads/main'
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: .
 
-      
   deploy-coverage:
-    if: github.ref == 'refs/heads/main'
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: release
+    runs-on: ubuntu-latest
 
     permissions:
       pages: write
@@ -109,12 +119,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
-          
-          
-     
