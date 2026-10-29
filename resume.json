@@ -3,23 +3,23 @@
   "basics": {
     "id": "milo",
     "name": "Milo Stolaric",
-    "label": "Lycéen",
+    "label": "Lycéen 1BPTM",
     "image": "",
-    "email": "####.###@####.com",
-    "phone": "+33########",
+    "email": "milo.stolaric@gmail.com",
+    "phone": "+33 6 51 74 83 45",
     "url": "https://marmits.github.io/cvmilo/",
-    "summary": "Élève de 2de",
+    "summary": "Élève de 1ère pro Bac Professionnel Traitements des Matériaux",
     "location": {
-      "address": "# ### ## #######",
-      "postalCode": "#####",
-      "city": "#########",
+      "address": "8 rue du château",
+      "postalCode": "02190",
+      "city": "Condé sur Suippe",
       "countryCode": "FR",
-      "region": "#######"
+      "region": "Haut de France"
     },
     "birth": {
-      "place": "#######",
+      "place": "Reims",
       "state": "France",
-      "date": "1970-12-31"
+      "date": "2010-12-20"
     },
     "profiles": [
       
@@ -28,23 +28,37 @@
   "work": [
   ],
   "education": [
+  {
+    "institution": "Lycée Franklin Roosevelt",
+    "location": {
+      "city": "Reims",
+      "countryCode": "FR",
+      "region": "France"
+    },
+    "area": "Lycée",
+    "studyType": "1ère pro Bac Professionnel Traitements des Matériaux",
+  "startDate": "2026-09-01",  
+    "score": "",
+    "courses": []
+  },
 	{
-      "institution": "##############",
+      "institution": "Lycée Franklin Roosevelt",
       "location": {
-        "city": "#######################",
+        "city": "Reims",
         "countryCode": "FR",
         "region": "France"
       },
       "area": "Lycée",
       "studyType": "Classe de 2de générale et technologique",
 	  "startDate": "2025-09-01",  
+    "endDate" : "2026-04-03", 
       "score": "",
       "courses": []
     },
     {
-      "institution": "##############",
+      "institution": "Collège Alexandre Dumas",
       "location": {
-        "city": "#######################",
+        "city": "Villeneuve sur aisne",
         "countryCode": "FR",
         "region": "France"
       },
