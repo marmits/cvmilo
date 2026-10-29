@@ -1,0 +1,107 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "id": "milo",
+    "name": "Milo Stolaric",
+    "label": "Lycéen",
+    "image": "",
+    "email": "####.###@####.com",
+    "phone": "+33########",
+    "url": "https://marmits.github.io/cvmilo/",
+    "summary": "Élève de 2de",
+    "location": {
+      "address": "# ### ## #######",
+      "postalCode": "#####",
+      "city": "#########",
+      "countryCode": "FR",
+      "region": "#######"
+    },
+    "birth": {
+      "place": "#######",
+      "state": "France",
+      "date": "1970-12-31"
+    },
+    "profiles": [
+      
+    ]
+  },
+  "work": [
+  ],
+  "education": [
+    {
+        "institution": "##############",
+        "location": {
+            "city": "#######################",
+            "countryCode": "FR",
+            "region": "France"
+        },
+        "area": "Lycée",
+        "studyType": "1ère pro Bac Professionnel Traitements des Matériaux",
+        "startDate": "2026-09-01",  
+        "score": "",
+        "courses": []
+    },
+	{
+      "institution": "##############",
+      "location": {
+        "city": "#######################",
+        "countryCode": "FR",
+        "region": "France"
+      },
+      "area": "Lycée",
+      "studyType": "Classe de 2de générale et technologique",
+	  "startDate": "2025-09-01",  
+      "score": "",
+      "courses": []
+    },
+    {
+      "institution": "##############",
+      "location": {
+        "city": "#######################",
+        "countryCode": "FR",
+        "region": "France"
+      },
+      "area": "Collège",
+      "studyType": "6e, 5e, 4e, 3e",
+      "startDate": "2021-09-01",    
+      "endDate" : "2025-07-03",       
+      "score": "",
+      "courses": []
+    }
+  ],
+  "volunteer": [],
+  "awards": [],
+  "certificates": [],
+  "publications": [],
+  "skills": [
+    {
+      "keywords": [
+        "ASSR1", "ASSR2"
+
+      ],
+      "name": "Sécurité routière."
+    }
+  ],
+  "languages": [
+    {
+      "language": "Fr",
+      "fluency": "Langue maternelle"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Athlétisme"
+    },
+    {
+      "name": "Football"
+    }
+  ],
+  "references": [],
+  "projects": [
+
+  ],
+  "meta": {
+    "version": "v1.0.0",
+    "canonical": "https://github.com/jsonresume/resume-schema/blob/v1.0.0/schema.json"
+  }
+}
