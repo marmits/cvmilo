@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 24.22.2
+          node-version: 24
           cache: npm
 
       # Le thème installé depuis Git lance "pnpm run build" dans son prepare.
