@@ -57,7 +57,7 @@ jobs:
         run: npm run build
 
       - name: Prepare Pages artifact
-        run: mkdir -p dist && cp index.html resume.pdf dist/
+        run: mkdir -p dist && cp index.html resume.pdf resume.json dist/
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
