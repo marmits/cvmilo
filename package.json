@@ -4,21 +4,21 @@
   "scripts": {
     "init": "resumed init",
     "start": "node index.js",
+    "build": "resumed render resume.json --theme jsonresume-theme-stackoverflowmar && mv resume.html index.html && npm start",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
-    "jsonresume-theme-stackoverflowmar": "github:marmits/jsonresume-theme-stackoverflowmar#v2.0.2",
+    "jsonresume-theme-stackoverflowmar": "git+https://github.com/marmits/jsonresume-theme-stackoverflowmar.git#v2.0.2",
     "puppeteer": "^25.16.0",
     "resumed": "^7.1.0"
+  },
+  "allowScripts": {
+    "puppeteer@25.16.0": true
   },
   "name": "jsonresumMilo",
   "version": "2.0.0",
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "description": "",
-  "allowScripts": {
-    "github:marmits/jsonresume-theme-stackoverflowmar#f854e872b7f1b0064bc5b6d115f9ac517bb5b5bb": true,
-    "puppeteer@25.16.0": true
-  }
+  "description": ""
 }

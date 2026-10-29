@@ -1,120 +1,73 @@
-name: CI
+name: Build CV
 
 on:
   push:
-    branches:
-      - main
+    branches: [dev, main]
   pull_request:
-    branches:
-      - main
+    branches: [dev, main]
   workflow_dispatch:
 
-# Permissions minimales par défaut.
 permissions:
   contents: read
 
 jobs:
-  test:
-    name: Test on Node.js 24
+  build:
+    name: Build HTML and PDF in NodeTools
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout application
         uses: actions/checkout@v5
         with:
           persist-credentials: false
 
-      # Nécessaire si package-lock.json référence le thème via git+ssh.
-      - name: Configure SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
-
-      # Le thème exécute "pnpm run build" dans son script prepare.
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 12.15.0
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Check dependency tree
-        run: npm ls
-
-      - name: Security audit
-        run: npm audit
-
-      - name: Test
-        run: npm test
-
-  release:
-    name: Build CV and PDF
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
+      - name: Checkout NodeTools environment
         uses: actions/checkout@v5
         with:
+          repository: marmits/nodetools
+          ref: dev
+          path: .nodetools
           persist-credentials: false
 
-      - name: Configure SSH
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Cache npm and Puppeteer downloads
+        uses: actions/cache@v4
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          path: |
+            ~/.npm
+            ~/.cache/puppeteer
+          key: ${{ runner.os }}-node24-cv-build-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node24-cv-build-
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
+      - name: Prepare caches
+        run: mkdir -p "$HOME/.npm" "$HOME/.cache/puppeteer"
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 12.15.0
+      - name: Build NodeTools image
+        run: docker build --tag marmits-nodetools:ci .nodetools
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Check dependency tree
-        run: npm ls
-
-      - name: Security audit
-        run: npm audit
-
-      - name: Render resume
-        run: npx resumed render resume.json --theme jsonresume-theme-stackoverflowmar
-
-      - name: Create index
-        run: mv resume.html index.html
-
-      - name: Generate PDF
-        run: npm start
+      - name: Install dependencies and build CV
+        run: |
+          docker run --rm --init \
+            --volume "$GITHUB_WORKSPACE:/app/cvmilo" \
+            --volume "$HOME/.npm:/root/.npm" \
+            --volume "$HOME/.cache/puppeteer:/root/.cache/puppeteer" \
+            --workdir /app/cvmilo \
+            marmits-nodetools:ci \
+            zsh -lc 'npm ci && npm test && npm run build && mkdir -p dist && cp index.html resume.pdf dist/'
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
-  deploy-coverage:
-    name: Deploy to GitHub Pages
+  deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
-
     permissions:
       pages: write
       id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

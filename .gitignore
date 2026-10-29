@@ -3,6 +3,7 @@ node_modules/
 resume.html
 resume.pdf
 resume_original.json
+dist/
 
 index.html
 cv/index.html
