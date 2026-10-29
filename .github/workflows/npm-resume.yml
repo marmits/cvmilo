@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    name: Build HTML and PDF in NodeTools
+    name: Build HTML and PDF
     runs-on: ubuntu-latest
 
     steps:
@@ -21,39 +21,43 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Checkout NodeTools environment
-        uses: actions/checkout@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
         with:
-          repository: marmits/nodetools
-          ref: dev
-          path: .nodetools
-          persist-credentials: false
+          node-version: 24.22.2
+          cache: npm
 
-      - name: Cache npm and Puppeteer downloads
+      # Le thème installé depuis Git lance "pnpm run build" dans son prepare.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.16.1
+
+      - name: Cache Puppeteer browser
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.npm
-            ~/.cache/puppeteer
-          key: ${{ runner.os }}-node24-cv-build-${{ hashFiles('package-lock.json') }}
+          path: ~/.cache/puppeteer
+          key: ${{ runner.os }}-puppeteer-node24-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node24-cv-build-
+            ${{ runner.os }}-puppeteer-node24-
 
-      - name: Prepare caches
-        run: mkdir -p "$HOME/.npm" "$HOME/.cache/puppeteer"
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build NodeTools image
-        run: docker build --tag marmits-nodetools:ci .nodetools
+      - name: Check dependency tree
+        run: npm ls
 
-      - name: Install dependencies and build CV
-        run: |
-          docker run --rm --init \
-            --volume "$GITHUB_WORKSPACE:/app/cvmilo" \
-            --volume "$HOME/.npm:/root/.npm" \
-            --volume "$HOME/.cache/puppeteer:/root/.cache/puppeteer" \
-            --workdir /app/cvmilo \
-            marmits-nodetools:ci \
-            zsh -lc 'npm ci && npm test && npm run build && mkdir -p dist && cp index.html resume.pdf dist/'
+      - name: Security audit
+        run: npm audit
+
+      - name: Test
+        run: npm test
+
+      - name: Build CV
+        run: npm run build
+
+      - name: Prepare Pages artifact
+        run: mkdir -p dist && cp index.html resume.pdf dist/
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
@@ -76,4 +80,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
