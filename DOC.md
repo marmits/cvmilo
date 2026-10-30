@@ -2,7 +2,7 @@
 
 ## Prérequis
 
-- Node.js 24 ou plus récent et npm.
+- Node.js 26 ou plus récent et npm.
 - Le fichier `resume.json` à la racine du projet.
 - Un accès Internet pour installer les dépendances et télécharger Chrome via Puppeteer.
 - Le thème `jsonresume-theme-stackoverflowmar` version `2.0.2`.
